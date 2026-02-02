@@ -1,0 +1,25 @@
+const columnSelect = createDropdown(columnList, async (column) => {
+        if (!column) return;
+
+        try {
+            const response = await fetch('/chat/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'query',
+                    data: {
+                        chemical_name: currentData.chemical_name,
+                        column: column
+                    }
+                })
+            });
+
+            const result = await response.json();
+            addMessage(result.ai_response);
+            optionsArea.innerHTML = '';
+            resetState();
+        } catch (error) {
+            console.error('Error:', error);
+            addMessage('An error occurred. Please try again.');
+        }
+    });

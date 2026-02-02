@@ -1,0 +1,239 @@
+{% load static %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'login/css/chemicals.css' %}" />
+    <title>BIOBUDDY - Chemicals</title>
+    <style>
+      body {
+        background-image: url("{% static 'images/8.png' %}");
+      }
+      .alert-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1050;
+        display: none;
+        width: 80%;
+        max-width: 600px;
+      }
+      .chemical-card {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg bg-dark border-bottom border-body"
+      data-bs-theme="dark"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Biobuddy</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="{% url 'login:home' %}">Home</a>
+            <a class="nav-link" href="{% url 'login:equipments' %}"
+              >Equiments</a
+            >
+            <a class="nav-link" href="{% url 'login:experiments' %}"
+              >Experiments</a
+            >
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="{% url 'login:chemicals' %}"
+              >Chemicals</a
+            >
+            <a class="nav-link" href="{% url 'login:chatbot' %}">Chatbot</a>
+            <a class="nav-link" href="{%url 'login:login' %}">Logout</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content-wrapper">
+      <!-- Safety Alert Popup -->
+      <div id="safetyAlert" class="alert-container">
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <p id="alertMessage"></p>
+        </div>
+      </div>
+
+      <!-- Chemicals Heading -->
+      <section>
+        <div class="text-center my-5">
+          <h2>CHEMICALS</h2>
+        </div>
+      </section>
+
+      <!-- Search Bar -->
+      <div class="container mt-3">
+        <input
+          type="text"
+          id="searchBar"
+          class="form-control"
+          placeholder="Search for chemicals..."
+          onkeyup="searchChemicals()"
+        />
+      </div>
+
+      <!-- Cards Section -->
+      <div class="container mt-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="chemicalList">
+          <!-- Chemical Cards - Removed inline onclick handlers -->
+          <div class="col chemical-card">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Sodium Chloride</h5>
+                <p class="card-text">
+                  Common salt used in various experiments.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col chemical-card">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Sulfuric Acid</h5>
+                <p class="card-text">
+                  Highly corrosive acid used in chemical analysis.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col chemical-card">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Ethanol</h5>
+                <p class="card-text">Used as a solvent and disinfectant.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div
+            class="col chemical-card"
+          >
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Hydrochloric Acid</h5>
+                <p class="card-text">
+                  Strong acid used in chemical reactions and cleaning.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col chemical-card">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Acetone</h5>
+                <p class="card-text">
+                  A solvent commonly used in cleaning and nail polish remover.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col chemical-card">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Ammonia</h5>
+                <p class="card-text">
+                  A common household and industrial cleaner.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col chemical-card"
+          >
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Sodium Hydroxide</h5>
+                <p class="card-text">
+                  Strong base used in soap making and drain cleaners.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col chemical-card">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Benzene</h5>
+                <p class="card-text">
+                  Used in industrial processes and as a solvent.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col chemical-card"
+          >
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Chloroform</h5>
+                <p class="card-text">
+                  Once used as an anesthetic, now primarily used in labs.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col chemical-card"
+          >
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">Formaldehyde</h5>
+                <p class="card-text">
+                  Preservative used in biological specimens and industrial
+                  applications.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4">
+      <div class="container text-center">
+        <p>
+          &copy; By Abithasri N K & Smitha M III BSC CS (AI) 2024 Biobuddy. All
+          rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/chemical.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+{% endblock content %}

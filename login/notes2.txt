@@ -1,0 +1,521 @@
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'login/css/chatbot.css' %}">
+    <title>BIOBUDDY</title>
+</head>
+<body>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Biobuddy</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{% url 'login:home' %}">Home</a>
+                    <a class="nav-link" href="{% url 'login:equipments' %}">Equiments</a>
+                    <a class="nav-link" href="{% url 'login:experiments' %}">Experiments</a>
+                    <a class="nav-link" href="{% url 'login:chemicals' %}">Chemicals</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'login:chatbot' %}">Chatbot</a>
+                    <a class="nav-link" href="{%url 'login:login' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+     <!-- Footer -->
+     <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; By Abithasri N K & Smitha M III BSC CS (AI) 2024 Biobuddy. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+{% endblock content %} - chatbot
+
+{% load static %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'login/css/equipments.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+    />
+    <title>BIOBUDDY</title>
+  </head>
+  <body>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <nav
+      class="navbar navbar-expand-lg bg-dark border-bottom border-body"
+      data-bs-theme="dark"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Biobuddy</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="{% url 'login:home' %}">Home</a>
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="{% url 'login:equipments' %}"
+              >Equiments</a
+            >
+            <a class="nav-link" href="{% url 'login:experiments' %}"
+              >Experiments</a
+            >
+            <a class="nav-link" href="{% url 'login:chemicals' %}">Chemicals</a>
+            <a class="nav-link" href="{% url 'login:chatbot' %}">Chatbot</a>
+            <a class="nav-link" href="{%url 'login:login' %}">Logout</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content">
+      <!-- Equipments Heading -->
+      <section>
+        <div class="centered-text">EQUIPMENTS</div>
+      </section>
+
+      <!-- Cards Section -->
+      <section class="cards-section">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- Card 1 -->
+            <div class="col">
+              <div class="card h-100">
+                <img src="{% static 'images/5.jpg' %}" class="card-img-top" alt="Card Image" />
+                <div class="card-body">
+                  <h5 class="card-title">Card Title 1</h5>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col">
+              <div class="card h-100">
+                <img src="{% static 'images/5.jpg' %}" class="card-img-top" alt="Card Image" />
+                <div class="card-body">
+                  <h5 class="card-title">Card Title 2</h5>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col">
+              <div class="card h-100">
+                <img src="{% static 'images/5.jpg' %}" class="card-img-top" alt="Card Image" />
+                <div class="card-body">
+                  <h5 class="card-title">Card Title 3</h5>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="col">
+              <div class="card h-100">
+                <img src="{% static 'images/5.jpg' %}" class="card-img-top" alt="Card Image" />
+                <div class="card-body">
+                  <h5 class="card-title">Card Title 4</h5>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="col">
+              <div class="card h-100">
+                <img src="{% static 'images/5.jpg' %}" class="card-img-top" alt="Card Image" />
+                <div class="card-body">
+                  <h5 class="card-title">Card Title 5</h5>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="col">
+              <div class="card h-100">
+                <img src="{% static 'images/5.jpg' %}" class="card-img-top" alt="Card Image" />
+                <div class="card-body">
+                  <h5 class="card-title">Card Title 6</h5>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container text-center">
+        <p>
+          &copy; By Abithasri N K & Smitha M III BSC CS (AI) 2024 Biobuddy. All
+          rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+{% endblock content %} - equipments.html
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-image: url('static/images/6.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #4f3e1069;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; 
+}
+
+.content {
+    flex: 1;
+    padding: 20px 0;
+}
+
+.centered-text {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    color: #4f3e1069;
+}
+
+.cards-section {
+    padding: 20px;
+}
+
+.card-body .btn {
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+.card-body .card-title {
+    text-align: center;
+}
+
+/* Footer (Fixed at the bottom) */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 20px;
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+footer p {
+    margin: 0;
+    color: white;
+}-equipments.css
+
+from flask import Flask, render_template, request, jsonify
+import pandas as pd
+import os
+from langchain.llms import Ollama
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
+from langchain.prompts import PromptTemplate
+
+app = Flask(__name__)
+
+# Initialize Ollama with the Llama2 model
+llm = Ollama(model="llama2")
+memory = ConversationBufferMemory()
+conversation = ConversationChain(llm=llm, memory=memory)
+
+# Define the conversation prompt template
+template = """
+You are a chemical inventory management assistant. Current context:
+{history}
+Human: {input}
+Assistant: Let me help you with that.
+"""
+
+PROMPT = PromptTemplate(
+    input_variables=["history", "input"], 
+    template=template
+)
+
+# Path to the Excel file
+EXCEL_PATH = r'C:\Users\Abith\OneDrive\Desktop\BIO BUDDY - Copy\chatbot\CHEMICAL LIST FINAL.xlsx'
+
+# Utility functions
+def check_excel_exists():
+    return os.path.exists(EXCEL_PATH)
+
+def save_excel(df):
+    try:
+        df.to_excel(EXCEL_PATH, index=False)
+        return True
+    except Exception as e:
+        print(f"Error saving Excel file: {str(e)}")
+        return False
+
+def load_excel():
+    if not check_excel_exists():
+        return None
+    try:
+        return pd.read_excel(EXCEL_PATH)
+    except Exception as e:
+        print(f"Error reading Excel file: {str(e)}")
+        return None
+
+def add_sorted_chemical(new_data):
+    df = load_excel()
+    if df is None:
+        return {'ai_response': "The Excel file does not exist or cannot be read.", 'status': 'error'}
+    
+    if df.empty:
+        df = pd.DataFrame([new_data])
+    else:
+        new_row = pd.DataFrame([new_data])
+        df = pd.concat([df, new_row], ignore_index=True)
+        df = df.sort_values(by='NAME OF THE CHEMICAL', ignore_index=True)
+    
+    if save_excel(df):
+        return {'ai_response': "Chemical added and sorted successfully!", 'status': 'success'}
+    return {'ai_response': "Failed to add chemical.", 'status': 'error'}
+
+# Process AI response
+def process_ai_response(action=None, data=None):
+    df = load_excel()
+
+    if df is None:
+        return {'ai_response': "The Excel file does not exist or cannot be read. Please upload a valid file.", 'status': 'error'}
+
+    if df.empty:
+        return {'ai_response': "The Excel file is empty. Please add data to get started.", 'status': 'error'}
+
+    try:
+        if action == "query":
+            chemical_name = data.get('chemical_name')
+            column = data.get('column')
+
+            if 'NAME OF THE CHEMICAL' not in df.columns:
+                return {'ai_response': "The Excel file does not have the required 'NAME OF THE CHEMICAL' column.", 'status': 'error'}
+
+            if chemical_name not in df['NAME OF THE CHEMICAL'].values:
+                return {'ai_response': f"Chemical '{chemical_name}' not found.", 'status': 'error'}
+
+            if column not in df.columns:
+                return {'ai_response': f"Column '{column}' not found in the Excel file.", 'status': 'error'}
+
+            result = df.loc[df['NAME OF THE CHEMICAL'] == chemical_name, column].iloc[0]
+            return {'ai_response': f"The {column} for {chemical_name} is {result}.", 'status': 'success'}
+
+        elif action == "add":
+            new_data = data.get('chemical_data', {})
+
+            if not new_data:
+                return {'ai_response': "No data provided for the new chemical.", 'status': 'error'}
+
+            new_row = pd.DataFrame([new_data])
+            df = pd.concat([df, new_row], ignore_index=True)
+
+            if save_excel(df):
+                return {'ai_response': "Chemical added successfully!", 'status': 'success'}
+            return {'ai_response': "Failed to add chemical.", 'status': 'error'}
+
+        elif action == "modify":
+            chemical_name = data.get('chemical_name')
+            column = data.get('column')
+            new_value = data.get('new_value')
+
+            if 'NAME OF THE CHEMICAL' not in df.columns:
+                return {'ai_response': "The Excel file does not have the required 'NAME OF THE CHEMICAL' column.", 'status': 'error'}
+
+            if chemical_name not in df['NAME OF THE CHEMICAL'].values:
+                return {'ai_response': f"Chemical '{chemical_name}' not found.", 'status': 'error'}
+
+            if column not in df.columns:
+                return {'ai_response': f"Column '{column}' not found in the Excel file.", 'status': 'error'}
+
+            df.loc[df['NAME OF THE CHEMICAL'] == chemical_name, column] = new_value
+
+            if save_excel(df):
+                return {'ai_response': f"Successfully updated {column} for {chemical_name}!", 'status': 'success'}
+            return {'ai_response': "Failed to update chemical.", 'status': 'error'}
+
+        elif action == "delete":
+            chemical_name = data.get('chemical_name')
+
+            if 'NAME OF THE CHEMICAL' not in df.columns:
+                return {'ai_response': "The Excel file does not have the required 'NAME OF THE CHEMICAL' column.", 'status': 'error'}
+
+            if chemical_name not in df['NAME OF THE CHEMICAL'].values:
+                return {'ai_response': f"Chemical '{chemical_name}' not found.", 'status': 'error'}
+
+            df = df[df['NAME OF THE CHEMICAL'] != chemical_name]
+
+            if save_excel(df):
+                return {'ai_response': f"Successfully deleted {chemical_name}!", 'status': 'success'}
+            return {'ai_response': "Failed to delete chemical.", 'status': 'error'}
+
+        else:
+            return {'ai_response': "Invalid action specified.", 'status': 'error'}
+
+    except Exception as e:
+        return {'ai_response': f"An error occurred: {str(e)}", 'status': 'error'}
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    action = data.get('action')
+    additional_data = data.get('data')
+
+    response = process_ai_response(action, additional_data)
+    return jsonify(response)
+
+@app.route('/get_chemicals')
+def get_chemicals():
+    df = load_excel()
+    if df is None or df.empty or 'NAME OF THE CHEMICAL' not in df.columns:
+        return jsonify([])
+
+    chemicals = df['NAME OF THE CHEMICAL'].dropna().tolist()
+    return jsonify(chemicals)
+
+@app.route('/get_columns')
+def get_columns():
+    df = load_excel()
+    if df is None or df.empty:
+        return jsonify([])
+
+    columns = df.columns.tolist()
+    return jsonify(columns)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+from flask import Flask, render_template, request, jsonify
+import pandas as pd
+from chatbot.chatbot import get_bot_response  # Import chatbot function
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')  # Loads your website’s homepage
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.json.get("message")
+    bot_reply = get_bot_response(user_message)  # Call chatbot function
+    return jsonify({"reply": bot_reply})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+from flask import Flask, render_template, request, jsonify
+from chatbot.main import process_ai_response, get_chemicals, get_columns  # Import chatbot functions
+
+app = Flask(__name__, template_folder='login/templates')
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    action = data.get('action')
+    additional_data = data.get('data')
+
+    response = process_ai_response(action, additional_data)
+    return jsonify(response)
+
+@app.route('/get_chemicals')
+def chemicals():
+    return jsonify(get_chemicals())
+
+@app.route('/get_columns')
+def columns():
+    return jsonify(get_columns())
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+def get_chemicals(request):
+    try:
+        # Path to your Excel file in login app's chatbot directory
+        excel_path = os.path.join(settings.BASE_DIR, 'login', 'chatbot', 'CHEMICAL LIST FINAL.xlsx')
+        
+        # Verify file exists
+        if not os.path.exists(excel_path):
+            return JsonResponse({'error': f"File not found at: {excel_path}"}, status=404)
+        
+        # Read Excel file
+        df = pd.read_excel(excel_path)
+        df = pd.read_excel(excel_path).fillna('') 
+        
+        # Get chemical column - change 'chemical_name' to your actual column header
+        chemicals = df['NAME OF THE CHEMICAL'].unique().tolist()  # Replace with your column name
+        
+        return JsonResponse(chemicals, safe=False)
+    
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def chatbot_view(request):
+    # If you want to use an API request to get chatbot responses dynamically
+    if request.method == "POST":
+        user_input = request.POST.get('user_input')
+        response = requests.post("http://127.0.0.1:8000/chat", data={"input": user_input})
+        if response.status_code == 200:
+            chatbot_response = response.json().get('response')
+        else:
+            chatbot_response = "Error: Unable to get a response."
+        
+        return render(request, "login/chatbot.html", {"chatbot_response": chatbot_response})
+
+    return render(request, "login/chatbot.html")

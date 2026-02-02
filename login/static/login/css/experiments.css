@@ -1,0 +1,94 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+  
+body {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #4f3e1069; /* Optional: Set text color to white for better contrast */
+    font-family: Arial, sans-serif; /* Optional: Ensure consistent font styling */
+}
+
+.centered-text {
+    font-size: 48px; /* Large font size */
+    font-weight: bold; /* Makes the text bold */
+    text-align: center; /* Centers text horizontally */
+    margin-top: 20px;
+    color: brown; /* Optional: Set the text color */
+}
+
+.content table {
+    width: 90%;
+    border-collapse: collapse;
+    margin:50px auto;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    color: black;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: justify;
+    font-size: 18px;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: rgb(33, 31, 31);
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.details {
+    display: none;
+    width:100%;
+    margin-top: 10px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    font-size: 18px;
+    font-family: "Times New Roman", serif;
+    font-style: italic;
+    color: #444;
+    text-align: justify;
+}
+
+/* Footer (Fixed at the bottom) */
+.content{
+    flex: 1;
+}
+
+footer {
+    width: 100%;
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 20px;
+    position: relative;
+}
+
+footer p {
+    margin: 0;
+    color: white;
+}

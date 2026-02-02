@@ -1,0 +1,21 @@
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from login.views import authView, home, equipments, experiments, chemicals, chatbot
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include(("login.urls","login"),"login")),
+    path("", home, name='home'),
+    path("signup/", authView, name="signup"),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("equipments/", equipments, name="equipments"),
+    path("experiments/", experiments, name="experiments"),
+    path("chemicals/", chemicals, name="chemicals"),
+    path("chatbot/", chatbot, name="chatbot"),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

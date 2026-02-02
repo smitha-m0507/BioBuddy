@@ -1,0 +1,45 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-image: url("{% static 'images/9.jpg' %}");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  color: brown;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.centered-text {
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  color: black;
+}
+
+/* Footer */
+.content {
+  margin-top: 10px;
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.9rem;
+}
+  
+  footer p {
+    color: white;
+  }

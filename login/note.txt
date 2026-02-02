@@ -1,0 +1,238 @@
+path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+LOGOUT_REDIRECT_URL = "login:login"
+
+def authView(request):
+    if request.method == "POST":
+        form =UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login:login")
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/signup.html", {"form": form})
+
+        path("signup/", authView, name="signup"),
+
+from django.urls import path, include
+from .views import authView, home, equipments, experiments, chemicals, chatbot
+from django.contrib.auth import views as auth_views
+
+app_name = "login"
+
+urlpatterns = [
+    path("", home, name='home'),
+    path("signup/", authView, name="signup"),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("equipments/", equipments, name="equipments"),
+    path("experiments/", experiments, name="experiments"),
+    path("chemicals/", chemicals, name="chemicals"),
+    path("chatbot/", chatbot, name="chatbot"),
+]
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def home(request):
+    return render(request, "home.html", {})
+
+def authView(request):
+    if request.method == "POST":
+        form =UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login:login")
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/signup.html", {"form": form})
+
+def equipments(request):
+    return render(request, "equipments.html")
+
+def experiments(request):
+    return render(request, "experiments.html")
+
+def chemicals(request):
+    return render(request, "chemicals.html")
+
+def chatbot(request):
+    return render(request, "chatbot.html")
+
+LOGIN_REDIRECT_URL = "/"
+
+LOGOUT_REDIRECT_URL = "/"
+
+
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth import get_user_model
+
+# Register your models here.
+User = get_user_model()
+
+class CustomUserAdmin(UserAdmin):
+    # Add customizations here
+    list_display = ('username', 'email', 'is_staff')
+    search_fields = ('username', 'email')
+    # Add more customizations as needed
+
+# Unregister the User model if it's already registered
+admin.site.unregister(User)
+
+# Register the User model with CustomUserAdmin
+admin.site.register(User, CustomUserAdmin)
+
+
+{% extends "base.html" %}
+{% block content %}
+<div class="shadow-wrap">
+    <div class="form-wrap">
+        <h3>Login</h3>
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <label>Email:</label>
+            <input type="email" name="email" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" required>
+            <button type="submit" href="{% url 'login:home' %}">Login</button>
+        </form>
+        <a class="signup-link" href="{% url 'login:signup' %}">Signup</a>
+    </div>
+</div>
+{% endblock content %}
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def home(request):
+    return render(request, "home.html", {})
+
+def authView(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Changed this line to use the correct URL name
+            return redirect('login')  # This will redirect to the default login page
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/signup.html", {"form": form})
+
+def equipments(request):
+    return render(request, "equipments.html")
+
+def experiments(request):
+    return render(request, "experiments.html")
+
+def chemicals(request):
+    return render(request, "chemicals.html")
+
+def chatbot(request):
+    return render(request, "chatbot.html")
+
+from django.urls import path, include
+from .views import authView, home, equipments, experiments, chemicals, chatbot
+from django.contrib.auth import views as auth_views
+
+app_name = "login"
+
+urlpatterns = [
+    path("", home, name='home'),
+    path("signup/", authView, name="signup"),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("equipments/", equipments, name="equipments"),
+    path("experiments/", experiments, name="experiments"),
+    path("chemicals/", chemicals, name="chemicals"),
+    path("chatbot/", chatbot, name="chatbot"),
+]
+
+{% extends "base.html" %}
+{% block content %}
+<div class="shadow-wrap">
+    <div class="form-wrap">
+        <h3>Signup </h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <a class="btn btn-primary" href="{% url 'login:signup' %}">Signup</a>
+        </form>
+        <a class="signup-link" href="{% url 'login:login' %}">Login</a>
+    </div>
+</div>
+{% endblock content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Registration Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    {% block content %}{% endblock content %}
+</body>
+</html>
+
+
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth import get_user_model
+from .models import CustomUser
+
+# Register your models here.
+User = get_user_model()
+
+class CustomUserAdmin(UserAdmin):
+    # Add customizations here
+    list_display = ('username', 'email', 'is_staff')
+    search_fields = ('username', 'email')
+    # Add more customizations as needed
+
+# Unregister only if it's already registered
+if admin.site.is_registered(User):
+    admin.site.unregister(User)
+
+# Register the User model with CustomUserAdmin
+admin.site.register(CustomUser, UserAdmin)
+
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db import models
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
+
+class CustomUser(AbstractUser):
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
+    

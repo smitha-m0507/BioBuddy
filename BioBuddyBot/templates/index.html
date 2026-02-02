@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Chatbot Icon */
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: url('bot-icon.png') no-repeat center center;
+            background-size: cover;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            background-color: #2c3e50;
+            color: white;
+	    z-index: 1000;
+        }
+
+        /* If using FontAwesome */
+        #chatbot-icon::before {
+            content: "🤖"; /* Emoji fallback */
+        }
+
+        /* Chatbot Container (Initially Hidden) */
+        #chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+	    z-index: 999;
+        }
+
+        /* Header with Minimize and Close Buttons */
+        #chat-header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Minimize and Close Buttons */
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .bot-message {
+            background: #f0f2f5;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background: #0084ff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        #input-area {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        #user-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #34495e;
+        }
+	
+	/* Hidden State for Minimized Chat */
+        #chatbot-container.minimized {
+            height: 50px;
+            overflow: hidden;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 10px;
+            justify-content: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #90a4ae;
+            border-radius: 50%;
+            animation: bounce 1.5s infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.1s; }
+        .dot:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Chatbot Icon -->
+    <div id="chatbot-icon" onclick="toggleChatbot()"></div>
+
+    <!-- Chatbot Container -->
+    <div id="chatbot-container">
+        <div id="chat-header">
+            BioBuddyBot
+            <div class="header-buttons">
+                <button class="header-button" onclick="minimizeChat()">➖</button>
+                <button class="header-button" onclick="closeChat()">✖</button>
+            </div>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="input-area">
+            <div id="options-area"></div>
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        let currentState = 'initial';
+        let currentAction = '';
+        let currentData = {};
+        let chemicalList = [];
+        let columnList = [];
+
+	function toggleChatbot() {
+            const chatbot = document.getElementById('chatbot-container');
+            chatbot.style.display = chatbot.style.display === 'none' || chatbot.style.display === '' ? 'flex' : 'none';
+        }
+
+        function minimizeChat() {
+            const chatbot = document.getElementById('chatbot-container');
+            chatbot.classList.toggle('minimized');
+            if (chatbot.classList.contains('minimized')) {
+                chatbot.style.bottom = '80px';
+            } else {
+                chatbot.style.bottom = '20px';
+            }
+        }
+
+        function closeChat() {
+            document.getElementById('chatbot-container').style.display = 'none';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, false);
+            input.value = '';
+
+            setTimeout(() => {
+                addMessage("Hello! I'm your AI-powered BioBuddyBot. How can I assist you?");
+            }, 500);
+        }
+        
+        async function updateExcelAlphabetically(chemicalData) {
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'add_sorted',
+                    data: { chemical_data: chemicalData }
+                })
+            });
+            const result = await response.json();
+            addMessage(result.ai_response);
+        }
+
+        function addMessage(message, isBot = true) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isBot ? 'bot-message' : 'user-message'}`;
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        async function loadChemicalsAndColumns() {
+            try {
+                const [chemicalsResponse, columnsResponse] = await Promise.all([
+                    fetch('/get_chemicals'),
+                    fetch('/get_columns')
+                ]);
+                chemicalList = await chemicalsResponse.json();
+                columnList = await columnsResponse.json();
+
+                // Check if chemicals are loaded
+                if (chemicalList.length === 0) {
+                    addMessage();
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function createDropdown(items, onSelectCallback) {
+            const select = document.createElement('select');
+            select.innerHTML = `<option value="">Please select...</option>
+                ${items.map(item => `<option value="${item}">${item}</option>`).join('')}`;
+            select.onchange = (e) => onSelectCallback(e.target.value);
+            return select;
+        }
+
+        function addMessage(message, isBot = true) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isBot ? 'bot-message' : 'user-message'}`;
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showLoading(show) {
+            document.querySelector('.loading').style.display = show ? 'block' : 'none';
+        }
+
+        async function handleQuery(chemicalName) {
+            currentData.chemical_name = chemicalName;
+            const optionsArea = document.getElementById('options-area');
+            optionsArea.innerHTML = '';
+            
+            const columnSelect = createDropdown(columnList, async (column) => {
+                if (!column) return;
+                
+                try {
+                    const response = await fetch('/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: 'query',
+                            data: {
+                                chemical_name: currentData.chemical_name,
+                                column: column
+                            }
+                        })
+                    });
+
+                    const result = await response.json();
+                    addMessage(result.ai_response);
+                    optionsArea.innerHTML = '';
+                    resetState();
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage('An error occurred. Please try again.');
+                }
+            });
+
+            optionsArea.appendChild(columnSelect);
+            addMessage('Please select the column you want to query:');
+        }
+
+        async function handleAdd() {
+            const optionsArea = document.getElementById('options-area');
+            optionsArea.innerHTML = '';
+            currentData.chemical_data = {};
+            currentData.current_column_index = 0;
+
+            const chemicalNameInput = document.createElement('input');
+            chemicalNameInput.placeholder = "Enter chemical name...";
+            optionsArea.appendChild(chemicalNameInput);
+
+            const addButton = document.createElement('button');
+            addButton.textContent = "Add Chemical";
+            addButton.onclick = async () => {
+                const chemicalName = chemicalNameInput.value.trim();
+                if (!chemicalName) {
+                    addMessage("Please enter a chemical name.");
+                    return;
+                }
+                currentData.chemical_data['NAME OF THE CHEMICAL'] = chemicalName;
+                optionsArea.innerHTML = '';
+                await collectColumnData();
+            };
+            optionsArea.appendChild(addButton);
+            addMessage('Please enter the chemical name:');
+        }
+
+        async function collectColumnData() {
+            const optionsArea = document.getElementById('options-area');
+            if (currentData.current_column_index < columnList.length) {
+                const column = columnList[currentData.current_column_index];
+                const input = document.createElement('input');
+                input.placeholder = `Enter ${column}...`;
+                optionsArea.appendChild(input);
+
+                const nextButton = document.createElement('button');
+                nextButton.textContent = "Next";
+                nextButton.onclick = async () => {
+                    const value = input.value.trim();
+                    if (!value) {
+                        addMessage(`Please enter a value for ${column}.`);
+                        return;
+                    }
+                    currentData.chemical_data[column] = value;
+                    currentData.current_column_index++;
+                    optionsArea.innerHTML = '';
+                    await collectColumnData();
+                };
+                optionsArea.appendChild(nextButton);
+            } else {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'add',
+                        data: currentData
+                    })
+                });
+
+                const result = await response.json();
+                addMessage(result.ai_response);
+                await loadChemicalsAndColumns();
+                resetState();
+            }
+        }
+
+        async function handleModify(chemicalName) {
+            currentData.chemical_name = chemicalName;
+            const optionsArea = document.getElementById('options-area');
+            optionsArea.innerHTML = '';
+            
+            const columnSelect = createDropdown(columnList, async (column) => {
+                if (!column) return;
+                currentData.column = column;
+                optionsArea.innerHTML = '';
+                addMessage(`Please enter the new value for ${column}:`);
+                const input = document.createElement('input');
+                input.placeholder = `New value for ${column}`;
+                optionsArea.appendChild(input);
+
+                const modifyButton = document.createElement('button');
+                modifyButton.textContent = "Modify";
+                modifyButton.onclick = async () => {
+                    const newValue = input.value.trim();
+                    if (!newValue) {
+                        addMessage("Please enter a new value.");
+                        return;
+                    }
+                    const response = await fetch('/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            action: 'modify',
+                            data: {
+                                chemical_name: currentData.chemical_name,
+                                column: currentData.column,
+                                new_value: newValue
+                            }
+                        })
+                    });
+
+                    const result = await response.json();
+                    addMessage(result.ai_response);
+                    await loadChemicalsAndColumns();
+                    resetState();
+                };
+                optionsArea.appendChild(modifyButton);
+            });
+
+            optionsArea.appendChild(columnSelect);
+            addMessage('Please select the column you want to modify:');
+        }
+
+        async function handleDelete(chemicalName) {
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'delete',
+                        data: { chemical_name: chemicalName }
+                    })
+                });
+
+                const result = await response.json();
+                addMessage(result.ai_response);
+                await loadChemicalsAndColumns();
+                resetState();
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('Failed to delete the chemical. Please try again.');
+            }
+        }
+
+        async function handleInitialState(message) {
+            const lowercaseMsg = message.toLowerCase();
+            if (['queries', 'add', 'modify', 'delete'].includes(lowercaseMsg)) {
+                currentAction = lowercaseMsg;
+                
+                if (currentAction === 'add') {
+                    await handleAdd();
+                } else {
+                    const optionsArea = document.getElementById('options-area');
+                    optionsArea.innerHTML = '';
+
+                    if (chemicalList.length === 0) {
+                        addMessage('Error: No chemicals found in the Excel file. Please add some chemicals.');
+                        resetState();
+                        return;
+                    }
+
+                    const chemicalSelect = createDropdown(chemicalList, (chemical) => {
+                        if (!chemical) return;
+                        optionsArea.innerHTML = '';
+
+                        if (currentAction === 'queries') handleQuery(chemical);
+                        else if (currentAction === 'modify') handleModify(chemical);
+                        else if (currentAction === 'delete') handleDelete(chemical);
+                    });
+
+                    optionsArea.appendChild(chemicalSelect);
+                    addMessage('Please select a chemical:');
+                }
+            } else {
+                addMessage('Please choose one of: Queries, Add, Modify, Delete');
+            }
+        }
+
+        async function sendMessage() {
+    	    const input = document.getElementById('user-input');
+    	    const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, false);
+            input.value = '';
+
+            // Check for exit phrases
+            const exitPhrases = ['goodbye', 'thank you'];
+            if (exitPhrases.includes(message.toLowerCase())) {
+                addMessage("Goodbye! If you need assistance again, feel free to ask.", true);
+                return; // End the conversation
+            }
+
+            try {
+                if (currentState === 'initial') {
+                    await handleInitialState(message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('Sorry, an error occurred. Please try again.');
+            }
+        }
+
+        function resetState() {
+            currentState = 'initial';
+            currentAction = '';
+            currentData = {};
+            document.getElementById('options-area').innerHTML = '';
+            addMessage('What else can I help you with? (Queries/Add/Modify/Delete)');
+        }
+
+        window.onload = async function() {
+            await loadChemicalsAndColumns();
+            addMessage('Hello! I\'m your AI-powered BioBuddyBot. I use Llama2 for natural language understanding and can help you manage your lab materials.');
+            addMessage('Please choose one of: Queries, Add, Modify, Delete');
+        };
+
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

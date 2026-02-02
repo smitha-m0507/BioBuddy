@@ -1,0 +1,245 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-y: auto;
+}
+
+
+/* Styling the image section */
+.image-section {
+  margin-top: 0; /* Ensures no margin above the image */
+}
+
+.full-width-image {
+  width: 100%; /* Makes the image span the full width of the page */
+  height: auto; /* Maintains the aspect ratio of the image */
+  display: block; /* Removes any extra spacing caused by inline images */
+}
+
+.navbar {
+  position: relative; /* Ensures it doesn't overlap the image */
+  z-index: 10;
+}
+
+/*hr styling*/
+.custom-hr{
+  height: 10px;
+  background-color: rgb(72, 57, 34);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+/* Background image styling */
+.background-image {
+  background-image: url("{% static 'images/1.png' %}"); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: calc(100vh - 56px); /* Adjust height minus the navbar height */
+}
+
+/* Style for Welcome to Biobuddy */
+.noto-serif-welcome {
+  font-family: "Noto Serif", serif;
+  font-optical-sizing: auto;
+  font-weight: 700; /* Set to 700 for bold text */
+  font-style: normal;
+  font-variation-settings: "wdth" 100; /* Optional: Adjust width */
+  margin-top: -20px;
+  text-align: center;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  color: #DC3545;
+}
+
+/* Content styling */
+.content {
+  text-align: justify;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensures the content is vertically centered */
+  font-weight: bold;
+}
+
+.content p {
+  color: #6F42C1;
+}
+
+#about {
+  padding: 50px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+#about h2 {
+  font-family: "Noto Serif", serif;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+#about p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+}
+
+#services h3 {
+  font-family: "Noto Serif", serif;
+  color: #333;
+}
+
+/* Section Styling */
+section {
+  padding: 50px 0;
+}
+
+.bg-light {
+  background-color: #f9f9f9;
+}
+
+h2 {
+  font-family: "Noto Serif", serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+#card-section {
+  background-color: #fdfdfd;
+  padding: 50px 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-family: "Noto Serif", serif;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: brown;
+  text-align: center;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #181212;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.card .btn {
+  background-color: #007bff;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  align-self: center;
+}
+
+.card-body {
+  display: flex;               /* Make the card body a flex container */
+  flex-direction: column;      /* Arrange children (title, text, button) in a column */
+  align-items: center;         /* Center items horizontally */
+  justify-content: space-between; /* Add spacing between items for better layout */
+  flex-grow: 1;/* Makes the card body take up remaining space */
+}
+
+/* Custom styles for the card */
+.card {
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+/* Hover effect on the card */
+.card:hover {
+  background-color: #f8f9fa; /* Light gray background on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Optional: Change color of the button on hover */
+.card .btn-primary {
+  transition: background-color 0.3s ease;
+}
+
+.card:hover .btn-primary {
+  background-color: #007bff; /* Darken the button on hover */
+}
+
+/* Optional: Style the card title to stand out on hover */
+.card:hover .card-title {
+  color: #007bff; /* Change text color of card title */
+}
+
+#equipments p{
+  text-align: justify;
+  justify-content: center;
+  align-items: center;
+}
+
+#experiments p{
+  text-align: justify;
+  justify-content: center;
+  align-items: center;
+}
+
+#chemicals p{
+  text-align: justify;
+  justify-content: center;
+  align-items: center;
+}
+
+#chatbot p{
+  text-align: justify;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Footer */
+footer {
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.9rem;
+}
+
+footer p {
+  color: white;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease-out;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+    

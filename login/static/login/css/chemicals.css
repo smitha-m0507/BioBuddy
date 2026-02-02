@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Monomakh&display=swap');
+
+html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+}
+
+body{
+      background-image: url("{% static 'images/8.png' %}");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      background-size: cover;
+      color: brown;
+      font-family: "Monomakh", serif;
+      min-height: 100vh;
+}
+
+.monomakh-regular {
+    font-weight: 400;
+    font-style: normal;
+}
+  
+/* Main content area */  
+.content-wrapper {
+      flex: 1;
+      padding-bottom: 60px; /* Space for footer */
+}
+
+/* Chemicals heading */
+.chemicals-heading h2 {
+      font-size: 48px;
+      font-weight: bold;
+      color: brown;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      margin: 2rem 0;
+}
+
+/* Chemical cards styling */
+.chemical-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+}
+
+.chemical-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 1rem;
+}
+
+.card-text {
+      font-size: 0.9rem;
+      color: #7f8c8d;
+      line-height: 1.5;
+}
+
+/* Search bar styling */
+#searchBar {
+      border-radius: 25px;
+      padding: 15px 25px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer styling */
+footer {
+      background-color: #222 !important;
+      color: white !important;
+      padding: 1.5rem 0;
+      margin-top: auto;
+      width: 100%;
+}
+
+footer p {
+      margin: 0;
+      font-size: 0.9rem;
+}
+
+/* Alert customization */
+.alert-container {
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+#alertMessage {
+      font-size: 0.95rem;
+      line-height: 1.6;
+}
